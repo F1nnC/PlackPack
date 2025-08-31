@@ -1,6 +1,4 @@
-from deck.deck import deck
+from game.blackjack import blackjack
 
 if __name__ == "__main__":
-    d = deck(3)
-    d.shuffle(7)
-    d.printDeck()
+    d = blackjack()

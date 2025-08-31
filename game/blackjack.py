@@ -11,8 +11,16 @@ class blackjack:
         self.deck = deck(input_decks)
         self.player_hand = []
         self.dealer_hand = []
+        self.player_chips_bet = 0
         self.player_chips = 100
         self.deck.shuffle(20)
+        self.start_game()
+
+    def start_game(self):
+        self.player_bet()
+        self.deal_initial()
+        self.print_hands()
+        self.player_turn()
 
     @staticmethod
     def print_cards_side_by_side(cards, reveal):
@@ -23,6 +31,19 @@ class blackjack:
         for i in range(len(lines_per_card[0])):
             print("   ".join(card[i] for card in lines_per_card))
 
+    def player_bet(self):
+        while True:
+            try:
+                print(f"You have {self.player_chips} chips.")
+                bet = int(input("Enter your bet amount: "))
+                if 0 < bet <= self.player_chips:
+                    self.player_chips_bet = bet
+                    self.player_chips -= bet
+                    break
+                else:
+                    print(f"Invalid bet. You have {self.player_chips} chips.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
     def print_hands(self, reveal_dealer=False):
         print("Dealer's hand:")
@@ -38,6 +59,8 @@ class blackjack:
         print("\nPlayer's hand:")
         self.print_cards_side_by_side(self.player_hand, True)
         print(f"Value: {self.calculate_hand_value(self.player_hand)}\n")
+        print(f"Your bet: {self.player_chips_bet}")
+        print(f"Your chips: {self.player_chips}\n")
 
     def calculate_hand_value(self, hand):
         value = sum(c.getCardValue() for c in hand)
@@ -51,8 +74,18 @@ class blackjack:
         for i in range(2):
             self.player_hand.append(self.deck.cards.pop())
             self.dealer_hand.append(self.deck.cards.pop())
-
-if __name__ == "__main__":
-    game = blackjack()
-    game.deal_initial()
-    game.print_hands()
+    
+    def player_turn(self):
+        while True:
+            action = input("Do you want to (h)it or (s)tand? ").lower()
+            if action == "h":
+                os.system('clear' if os.name == 'posix' else 'cls')
+                self.player_hand.append(self.deck.cards.pop())
+                self.print_hands()
+                if self.calculate_hand_value(self.player_hand) > 21:
+                    print("Bust! You lose.")
+                    return
+            elif action == "s":
+                break
+            else:
+                print("Invalid input. Please enter 'h' or 's'.")
