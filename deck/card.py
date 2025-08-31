@@ -36,15 +36,16 @@ class card:
 
         
     def printCard(self):
-        print(f"""
-        -----------
-        | {self.card}       |
-        |         |
-        |    {self.suit}    |
-        |         |
-        |       {self.card} |
-        -----------
-        """)
+        # print(f"""
+        # -----------
+        # | {self.card}       |
+        # |         |
+        # |    {self.suit}    |
+        # |         |
+        # |       {self.card} |
+        # -----------
+        # """)
+        print(f"{self.card}{self.suit}", end=' ')
 
     def getCardValue(self):
         return self.value
