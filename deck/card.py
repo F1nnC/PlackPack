@@ -23,11 +23,11 @@ class card:
         if self.card == "10":
             return [
                 "-----------",
-                f"| {self.card}     |",
+                f"| {self.card}      |",
                 "|         |",
                 f"|    {self.suit}    |",
                 "|         |",
-                f"|     {self.card} |",
+                f"|      {self.card} |",
                 "-----------"
             ]
         else:
